@@ -171,7 +171,10 @@ ou pressionando no terminal:
 ```bash
 w
 ```
-
+Porém, antes é necessário instalar estas dependências:
+```bash
+npx expo install react-dom react-native-web
+```
 ---
 
 ## 📁 Estrutura do Projeto
