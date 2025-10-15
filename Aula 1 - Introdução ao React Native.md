@@ -267,6 +267,3 @@ Modifique o app para:
 3. Acrescentar um **botão** com uma mensagem no `onPress` (clique)
 
 💡 Dica: use o componente `Button` e o evento `onPress`.
-
-Quer que eu gere esse documento como arquivo `.md` pronto para download (por exemplo: `Aula1-Introducao-ReactNative.md`)?
-```
