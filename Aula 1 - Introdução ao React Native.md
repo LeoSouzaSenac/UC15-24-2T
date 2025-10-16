@@ -99,13 +99,11 @@ expo-secure-store
 
 ## 🧭 Passo a Passo — Criando o Primeiro Projeto (com TypeScript)
 
-### 1️⃣ Instalar o Node.js
+### 1️⃣ Instalar o Expo CLI
 
-Baixe e instale o **Node.js** em:
-👉 [https://nodejs.org](https://nodejs.org)
-
-Marque a opção **“Add to PATH”** durante a instalação.
-
+```bash
+npm install expo-cli
+```
 ---
 
 ### 2️⃣ Criar o Projeto com o Expo (usando TypeScript)
