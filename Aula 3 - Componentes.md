@@ -50,7 +50,7 @@ Para usar:
 
 ```tsx
 function Saudacao(props) {
-  return <Text>Olá, {props.nome}!</Text>;
+  return <Text>Olá, {props: {nome:string}!</Text>;
 }
 
 // Usando o componente
@@ -65,16 +65,6 @@ Olá, Maria!
 
 ---
 
-### 🔧 Usando desestruturação
-
-```tsx
-function Saudacao({ nome }) {
-  return <Text>Olá, {nome}!</Text>;
-}
-```
-
----
-
 ## 🔁 Reutilizando componentes
 
 Você pode usar o mesmo componente várias vezes com props diferentes.
@@ -82,8 +72,8 @@ Você pode usar o mesmo componente várias vezes com props diferentes.
 ```tsx
 import { Button } from 'react-native';
 
-function Botao({ titulo, aoPressionar }) {
-  return <Button title={titulo} onPress={aoPressionar} />;
+function Botao(props) {
+  return <Button title={props.titulo} onPress={props.aoPressionar} />;
 }
 
 function App() {
@@ -94,6 +84,7 @@ function App() {
     </>
   );
 }
+
 ```
 
 ---
