@@ -319,3 +319,25 @@ const styles = StyleSheet.create({
 });
 ```
 
+## Exercicio Rede Social
+
+Atividade: Criar Página de Perfil em React Native com Componentes e Props
+
+Desenvolva um projeto em React Native que represente a página de perfil de uma rede social.
+
+Requisitos:
+
+A tela deve conter:
+
+A foto de perfil e o nome do usuário no topo da página.
+
+Uma lista de componentes de post, criados separadamente.
+
+Cada componente Post deve receber props com, no mínimo:
+
+Texto da postagem.
+
+Imagem (usando props para definir a imagem a ser exibida).
+
+Botões interativos em cada post (como curtir, comentar ou compartilhar).
+
