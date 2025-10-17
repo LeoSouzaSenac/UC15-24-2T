@@ -29,7 +29,7 @@ Usamos funções que retornam JSX.
 import React from 'react';
 import { Text } from 'react-native';
 
-function Saudacao() {
+export default function Saudacao() {
   return <Text>Olá, mundo!</Text>;
 }
 ```
@@ -46,11 +46,13 @@ Para usar:
 
 **Props** são dados enviados para o componente.
 
-### Exemplo:
+### Exemplo com tipagem inline:
 
 ```tsx
-function Saudacao(props) {
-  return <Text>Olá, {props: {nome:string}!</Text>;
+import { Text } from 'react-native';
+
+export default function Saudacao(props: { nome: string }) {
+  return <Text>Olá, {props.nome}!</Text>;
 }
 
 // Usando o componente
@@ -72,19 +74,16 @@ Você pode usar o mesmo componente várias vezes com props diferentes.
 ```tsx
 import { Button } from 'react-native';
 
-function Botao(props) {
+export default function Botao(props: { titulo: string; aoPressionar: () => void }) {
   return <Button title={props.titulo} onPress={props.aoPressionar} />;
 }
+```
 
-function App() {
-  return (
-    <>
-      <Botao titulo="Salvar" aoPressionar={() => alert('Salvo!')} />
-      <Botao titulo="Cancelar" aoPressionar={() => alert('Cancelado!')} />
-    </>
-  );
-}
+### Usando:
 
+```tsx
+<Botao titulo="Salvar" aoPressionar={() => alert('Salvo!')} />
+<Botao titulo="Cancelar" aoPressionar={() => alert('Cancelado!')} />
 ```
 
 ---
@@ -94,20 +93,20 @@ function App() {
 ```tsx
 import { View, Text } from 'react-native';
 
-function Perfil({ nome, idade }) {
+function Saudacao(props: { nome: string }) {
+  return <Text>Olá, {props.nome}!</Text>;
+}
+
+function Perfil(props: { nome: string; idade: number }) {
   return (
     <View>
-      <Saudacao nome={nome} />
-      <Text>Idade: {idade}</Text>
+      <Saudacao nome={props.nome} />
+      <Text>Idade: {props.idade}</Text>
     </View>
   );
 }
 
-function Saudacao({ nome }) {
-  return <Text>Olá, {nome}!</Text>;
-}
-
-function App() {
+export default function App() {
   return <Perfil nome="Carlos" idade={28} />;
 }
 ```
@@ -131,22 +130,22 @@ function App() {
 import React from 'react';
 import { View, Text, Button, Alert, StyleSheet } from 'react-native';
 
-function Botao({ titulo, aoPressionar }) {
-  return <Button title={titulo} onPress={aoPressionar} />;
+function Botao(props: { titulo: string; aoPressionar: () => void }) {
+  return <Button title={props.titulo} onPress={props.aoPressionar} />;
 }
 
-function Saudacao({ nome }) {
-  return <Text style={styles.titulo}>Olá, {nome}!</Text>;
+function Saudacao(props: { nome: string }) {
+  return <Text style={styles.titulo}>Olá, {props.nome}!</Text>;
 }
 
-function Perfil({ nome, idade }) {
+function Perfil(props: { nome: string; idade: number }) {
   return (
     <View style={styles.container}>
-      <Saudacao nome={nome} />
-      <Text style={styles.texto}>Idade: {idade}</Text>
+      <Saudacao nome={props.nome} />
+      <Text style={styles.texto}>Idade: {props.idade}</Text>
       <Botao
         titulo="Enviar mensagem"
-        aoPressionar={() => Alert.alert('Mensagem', `Mensagem enviada para ${nome}`)}
+        aoPressionar={() => Alert.alert('Mensagem', `Mensagem enviada para ${props.nome}`)}
       />
     </View>
   );
@@ -226,8 +225,8 @@ Organize seus arquivos assim:
 import React from 'react';
 import { Button } from 'react-native';
 
-export default function Botao({ titulo, aoPressionar }) {
-  return <Button title={titulo} onPress={aoPressionar} />;
+export default function Botao(props: { titulo: string; aoPressionar: () => void }) {
+  return <Button title={props.titulo} onPress={props.aoPressionar} />;
 }
 ```
 
@@ -239,8 +238,8 @@ export default function Botao({ titulo, aoPressionar }) {
 import React from 'react';
 import { Text, StyleSheet } from 'react-native';
 
-export default function Saudacao({ nome }) {
-  return <Text style={styles.texto}>Olá, {nome}!</Text>;
+export default function Saudacao(props: { nome: string }) {
+  return <Text style={styles.texto}>Olá, {props.nome}!</Text>;
 }
 
 const styles = StyleSheet.create({
@@ -262,14 +261,14 @@ import { View, Text, Alert, StyleSheet } from 'react-native';
 import Saudacao from './Saudacao';
 import Botao from './Botao';
 
-export default function Perfil({ nome, idade }) {
+export default function Perfil(props: { nome: string; idade: number }) {
   return (
     <View style={styles.card}>
-      <Saudacao nome={nome} />
-      <Text style={styles.idade}>Idade: {idade}</Text>
+      <Saudacao nome={props.nome} />
+      <Text style={styles.idade}>Idade: {props.idade}</Text>
       <Botao
         titulo="Enviar mensagem"
-        aoPressionar={() => Alert.alert('Mensagem', `Enviado para ${nome}`)}
+        aoPressionar={() => Alert.alert('Mensagem', `Enviado para ${props.nome}`)}
       />
     </View>
   );
@@ -320,8 +319,3 @@ const styles = StyleSheet.create({
 });
 ```
 
----
-
-### ✅ Resultado
-
-Um app simples, visualmente limpo, com componentes reutilizáveis que recebem **props** para personalizar o conteúdo.
