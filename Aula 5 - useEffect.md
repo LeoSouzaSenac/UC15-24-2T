@@ -364,3 +364,47 @@ Ele permite que seu aplicativo **reaja automaticamente** às mudanças, **busque
 
 > 🔹 “O `useState` muda os dados.
 > 🔹 O `useEffect` reage quando esses dados mudam.”
+
+Perfeito! Então vamos criar um exercício **mais desafiador**, envolvendo múltiplos efeitos, APIs e interações entre estados.
+
+---
+
+# 🏋️ Exercício: Lista de Tarefas com Notificações
+
+## Objetivo:
+
+Treinar `useEffect` em cenários mais complexos:
+
+* Consumir uma API externa.
+* Atualizar estado com base em efeitos.
+* Limpar recursos quando necessário.
+* Executar efeitos condicionais.
+
+---
+
+## Descrição do exercício:
+
+Você vai criar um app que:
+
+1. Busca uma lista de tarefas fictícias de uma **API externa** (use `https://jsonplaceholder.typicode.com/todos`).
+2. Mostra apenas as tarefas **pendentes**. Leia na documentação e verifique qual propriedade a API usa para indicar uma tarefa pendente ou não.
+3. Atualiza automaticamente a lista **a cada 10 segundos**.
+4. Exibe uma **notificação na tela** (`Alert`) quando houver uma **nova tarefa** na lista. Use  Alert.alert('Nova tarefa disponível!'), importando de 'react-native'.
+5. Permite pausar/retomar a atualização automática. Use useState para controlar isso.
+6. Limpa os efeitos corretamente quando o componente é desmontado ou quando a atualização é pausada. Use clearInterval.
+
+---
+
+## ✅ Conceitos avançados que você vai treinar:
+
+1. **`useEffect` com múltiplas dependências** (`[ativo, tarefas]`).
+2. **Consumir API com fetch** dentro do efeito.
+3. **Comparação de estados anteriores e atuais** para gerar alertas.
+4. **Atualização automática com `setInterval`** e limpeza correta.
+5. **Controle condicional do efeito** (pausar/retomar atualizações).
+6. **Renderização de listas com `FlatList`**.
+
+---
+
+
+
