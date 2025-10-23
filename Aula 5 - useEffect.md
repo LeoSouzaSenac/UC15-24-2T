@@ -365,11 +365,9 @@ Ele permite que seu aplicativo **reaja automaticamente** às mudanças, **busque
 > 🔹 “O `useState` muda os dados.
 > 🔹 O `useEffect` reage quando esses dados mudam.”
 
-Perfeito! Então vamos criar um exercício **mais desafiador**, envolvendo múltiplos efeitos, APIs e interações entre estados.
-
 ---
 
-# 🏋️ Exercício: Lista de Tarefas com Notificações
+# Exercício: Lista de Tarefas com Notificações
 
 ## Objetivo:
 
@@ -395,7 +393,7 @@ Você vai criar um app que:
 
 ---
 
-## ✅ Conceitos avançados que você vai treinar:
+## Conceitos avançados que você vai treinar:
 
 1. **`useEffect` com múltiplas dependências** (`[ativo, tarefas]`).
 2. **Consumir API com fetch** dentro do efeito.
