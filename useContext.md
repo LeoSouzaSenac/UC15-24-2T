@@ -13,53 +13,98 @@ Serve para:
 
 ---
 
-## 🎬 Exemplo 0 – Antes do Contexto (Prop Drilling)
+# ⚙️ EXEMPLO 0 — PROP DRILLING (sem contexto)
 
-> Aqui vamos ver como o código **fica confuso e repetitivo** quando passamos props manualmente.
+---
 
-### 📄 App.tsx
+### 📄 `src/components/BotaoTemaPD.tsx`
 
 ```tsx
-// ===========================================
-// EXEMPLO SEM CONTEXTO - PROP DRILLING
-// ===========================================
+// ==========================================
+// ARQUIVO: src/components/BotaoTemaPD.tsx
+// ==========================================
 
-import React, { useState } from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
+import React from "react";
+import { Button } from "react-native";
 
-// ===============================
-// Componente mais "profundo"
-// ===============================
-// Ele precisa mudar o tema, mas depende que os dados
-// venham por props, mesmo que ele esteja 3 níveis abaixo.
-const BotaoTema = ({ temaEscuro, setTemaEscuro }: any) => {
+// Este componente está em um nível "baixo" na hierarquia.
+// Ele precisa mudar o tema, mas para isso depende que os dados
+// sejam enviados via props desde o componente principal (App).
+// Isso é o famoso PROP DRILLING.
+
+interface BotaoTemaPDProps {
+  temaEscuro: boolean;
+  setTemaEscuro: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export const BotaoTemaPD = ({ temaEscuro, setTemaEscuro }: BotaoTemaPDProps) => {
   return (
     <Button
       title={temaEscuro ? "Mudar para Claro" : "Mudar para Escuro"}
-      onPress={() => setTemaEscuro(!temaEscuro)}
+      onPress={() => setTemaEscuro(!temaEscuro)} // alterna o tema
     />
   );
 };
+```
 
-// ===============================
-// Componente intermediário
-// ===============================
-// Apenas repassa os props para o filho
-const Conteudo = ({ temaEscuro, setTemaEscuro }: any) => {
+---
+
+### 📄 `src/components/ConteudoPD.tsx`
+
+```tsx
+// ==========================================
+// ARQUIVO: src/components/ConteudoPD.tsx
+// ==========================================
+
+import React from "react";
+import { View, Text } from "react-native";
+import { BotaoTemaPD } from "./BotaoTemaPD";
+
+// Este componente está no meio da hierarquia.
+// Ele não usa o tema diretamente, mas precisa RECEBER e REPASSAR
+// as props para o próximo nível (BotaoTemaPD).
+// Isso deixa o código mais trabalhoso e difícil de manter.
+
+interface ConteudoPDProps {
+  temaEscuro: boolean;
+  setTemaEscuro: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export const ConteudoPD = ({ temaEscuro, setTemaEscuro }: ConteudoPDProps) => {
   return (
     <View>
       <Text style={{ color: temaEscuro ? "#fff" : "#000" }}>
         Tema atual: {temaEscuro ? "Escuro" : "Claro"}
       </Text>
-      <BotaoTema temaEscuro={temaEscuro} setTemaEscuro={setTemaEscuro} />
+
+      {/* repassando props manualmente */}
+      <BotaoTemaPD temaEscuro={temaEscuro} setTemaEscuro={setTemaEscuro} />
     </View>
   );
 };
+```
 
-// ===============================
-// Componente principal (App)
-// ===============================
-export default function App() {
+---
+
+### 📄 `src/AppPropDrilling.tsx`
+
+```tsx
+// ==========================================
+// ARQUIVO: src/AppPropDrilling.tsx
+// ==========================================
+
+import React, { useState } from "react";
+import { View, Text, StyleSheet } from "react-native";
+import { ConteudoPD } from "./components/ConteudoPD";
+
+// EXEMPLO SEM CONTEXTO (PROP DRILLING)
+//
+// Aqui, o estado do tema (escuro/claro) está no App.
+// Para que componentes "netos" consigam acessar ou alterar o tema,
+// precisamos passar as props manualmente até lá.
+// Isso é ineficiente e deixa o código verboso.
+
+export default function AppPropDrilling() {
   const [temaEscuro, setTemaEscuro] = useState(false);
 
   return (
@@ -69,11 +114,12 @@ export default function App() {
         { backgroundColor: temaEscuro ? "#333" : "#fff" },
       ]}
     >
-      <Text style={{ color: temaEscuro ? "#fff" : "#000" }}>
+      <Text style={{ color: temaEscuro ? "#fff" : "#000", marginBottom: 10 }}>
         Exemplo sem Contexto (Prop Drilling)
       </Text>
-      {/* Aqui passamos props manualmente */}
-      <Conteudo temaEscuro={temaEscuro} setTemaEscuro={setTemaEscuro} />
+
+      {/* Aqui passamos o tema e a função manualmente */}
+      <ConteudoPD temaEscuro={temaEscuro} setTemaEscuro={setTemaEscuro} />
     </View>
   );
 }
