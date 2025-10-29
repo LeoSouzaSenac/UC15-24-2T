@@ -184,6 +184,8 @@ interface TemaContextType {
 // =====================================
 // 2️⃣ Criando o contexto
 // =====================================
+
+// Aqui estamos fazendo a criação do contexto em si — o “objeto global” que vai guardar e compartilhar informações (no caso, o estado do tema) entre os componentes da aplicação React.
 // Inicialmente é undefined, pois só existe quando o Provider envolver o app
 const TemaContext = createContext<TemaContextType | undefined>(undefined);
 
@@ -192,12 +194,12 @@ const TemaContext = createContext<TemaContextType | undefined>(undefined);
 // =====================================
 // Ele "envolve" a aplicação e permite que todos os filhos
 // acessem o tema sem precisar de props
-export const TemaProvider = ({ children }: { children: ReactNode }) => {
+export const TemaProvider = (props: { children: ReactNode }) => {
   const [temaEscuro, setTemaEscuro] = useState(false); // tema inicial = claro
 
   return (
     <TemaContext.Provider value={{ temaEscuro, setTemaEscuro }}>
-      {children}
+      {props.children}
     </TemaContext.Provider>
   );
 };
@@ -437,7 +439,3 @@ export default function App() {
 | Props precisam ser repassadas manualmente | Dados ficam disponíveis globalmente |
 | Código longo e repetitivo                 | Código limpo e centralizado         |
 | Difícil manutenção                        | Fácil adicionar novos componentes   |
-
----
-
-Quer que eu adicione **uma versão visual com tema escuro real (background + botão colorido)** para deixar mais bonito no React Native (usando `TouchableOpacity` e `StyleSheet` estilizado)?
