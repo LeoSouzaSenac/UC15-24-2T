@@ -14,11 +14,13 @@ Serve para:
 ---
 # PROP DRILLING (SEM CONTEXTO)
 ```tsx
-import React from "react";
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View, TextInput } from "react-native";
+import React, { useState } from "react";
 
 // Componente que mostra o nome
 function MostrarUsuario(props: { nome: string }) {
-  return <h2>Olá, {props.nome}!</h2>;
+  return <Text style={styles.text}>Olá, {props.nome}!</Text>;
 }
 
 // Componente intermediário que só repassa a prop
@@ -26,58 +28,115 @@ function Painel(props: { nome: string }) {
   return <MostrarUsuario nome={props.nome} />;
 }
 
-// Componente principal
 export default function App() {
-  const nome = "Leonardo";
+  const [nome, setNome] = useState(""); 
 
   return (
-    <div>
-      {/* A prop "nome" precisa ser passada manualmente até o componente final */}
+    <View style={styles.container}>
+      
+      <TextInput
+        style={styles.input}
+        placeholder="Digite seu nome"
+        value={nome}
+        onChangeText={setNome}
+      />
+
+      
       <Painel nome={nome} />
-    </div>
+
+      
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 20,
+  },
+  input: {
+    width: "80%",
+    height: 40,
+    borderColor: "#aaa",
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    marginBottom: 20,
+  },
+  text: {
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+});
+
 
 ```
 
 # EXEMPLO COM CONTEXTO
 
 ```tsx
-import React, { createContext, useContext } from "react";
+import { StatusBar } from "expo-status-bar";
+import { createContext, useContext, useState } from "react";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 
 // 1️⃣ Criar o contexto
+// Aqui estamos fazendo a criação do contexto em si — o “objeto global” que vai guardar e compartilhar informações (no caso, o estado do tema) entre os componentes da aplicação React.
+// Inicialmente, o valor inicial do contexto é "Visitante"
 const UsuarioContext = createContext("Visitante");
 
 // 2️⃣ Criar a função auxiliar (hook personalizado)
+// useContext(UsuarioContext) serve para pegar o valor atual de um contexto que foi criado com createContext
+// Ou seja, ele permite acessar o “objeto global” (contexto) que criamos ali em sem precisar passar props manualmente entre vários componentes.
 function useUsuario() {
   return useContext(UsuarioContext);
 }
 
-// 3️⃣ Componente que mostra o nome
+// Componente que mostra o nome
 function MostrarUsuario() {
   const nome = useUsuario(); // Pega o nome direto do contexto
-  return <h2>Olá, {nome}!</h2>;
+  return <Text>Olá, {nome}!</Text>;
 }
 
-// 4️⃣ Componente intermediário (não usa o nome, só envolve)
+// Componente intermediário que só repassa a prop
 function Painel() {
+  return <MostrarUsuario />;
+}
+
+export default function App() {
+  const [nome, setNome] = useState("");
+
   return (
-    <div>
-      <h3>Painel do Usuário</h3>
-      <MostrarUsuario />
-    </div>
+    // Provider (fornecedor dos dados)
+    // Ele "envolve" a aplicação e permite que todos os filhos
+    // acessem o tema sem precisar de props
+    // Tudo que você colocar no value será disponível para todos os componentes “filhos” do Provider
+    <View>
+      <TextInput
+       
+        placeholder="Digite seu nome"
+        value={nome}
+        onChangeText={setNome}
+      />
+
+      <UsuarioContext.Provider value={nome}>
+        <Painel />
+      </UsuarioContext.Provider>
+    </View>
   );
 }
 
-// 5️⃣ Componente principal
-export default function App() {
-  return (
-    // O valor "Leonardo" será acessível por QUALQUER componente dentro do Provider
-    <UsuarioContext.Provider value="Leonardo">
-      <Painel />
-    </UsuarioContext.Provider>
-  );
-}
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
+
 
 
 ```
