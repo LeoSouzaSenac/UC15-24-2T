@@ -12,6 +12,75 @@ Serve para:
 ✅ Centralizar dados como tema, usuário logado, idioma etc.
 
 ---
+# PROP DRILLING (SEM CONTEXTO)
+```tsx
+import React from "react";
+
+// Componente que mostra o nome
+function MostrarUsuario(props: { nome: string }) {
+  return <h2>Olá, {props.nome}!</h2>;
+}
+
+// Componente intermediário que só repassa a prop
+function Painel(props: { nome: string }) {
+  return <MostrarUsuario nome={props.nome} />;
+}
+
+// Componente principal
+export default function App() {
+  const nome = "Leonardo";
+
+  return (
+    <div>
+      {/* A prop "nome" precisa ser passada manualmente até o componente final */}
+      <Painel nome={nome} />
+    </div>
+  );
+}
+
+```
+
+# EXEMPLO COM CONTEXTO
+
+```tsx
+import React, { createContext, useContext } from "react";
+
+// 1️⃣ Criar o contexto
+const UsuarioContext = createContext("Visitante");
+
+// 2️⃣ Criar a função auxiliar (hook personalizado)
+function useUsuario() {
+  return useContext(UsuarioContext);
+}
+
+// 3️⃣ Componente que mostra o nome
+function MostrarUsuario() {
+  const nome = useUsuario(); // Pega o nome direto do contexto
+  return <h2>Olá, {nome}!</h2>;
+}
+
+// 4️⃣ Componente intermediário (não usa o nome, só envolve)
+function Painel() {
+  return (
+    <div>
+      <h3>Painel do Usuário</h3>
+      <MostrarUsuario />
+    </div>
+  );
+}
+
+// 5️⃣ Componente principal
+export default function App() {
+  return (
+    // O valor "Leonardo" será acessível por QUALQUER componente dentro do Provider
+    <UsuarioContext.Provider value="Leonardo">
+      <Painel />
+    </UsuarioContext.Provider>
+  );
+}
+
+
+```
 
 # ⚙️ EXEMPLO 0 — PROP DRILLING (sem contexto)
 
