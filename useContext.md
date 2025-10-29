@@ -466,16 +466,20 @@ Um segundo exemplo de uso do contexto no React Native.
 
 import React, { createContext, useState, useContext, ReactNode } from "react";
 
-type Usuario = { nome: string } | null;
-type UsuarioContextType = {
-  usuario: Usuario;
-  setUsuario: React.Dispatch<React.SetStateAction<Usuario>>;
-};
+// Usando interface ao invés de type
+interface Usuario {
+  nome: string;
+} 
+
+interface UsuarioContextType {
+  usuario: Usuario | null;
+  setUsuario: React.Dispatch<React.SetStateAction<Usuario | null>>;
+}
 
 const UsuarioContext = createContext<UsuarioContextType | undefined>(undefined);
 
 export const UsuarioProvider = ({ children }: { children: ReactNode }) => {
-  const [usuario, setUsuario] = useState<Usuario>(null); // começa sem usuário logado
+  const [usuario, setUsuario] = useState<Usuario | null>(null); // começa sem usuário logado
 
   return (
     <UsuarioContext.Provider value={{ usuario, setUsuario }}>
@@ -490,6 +494,7 @@ export const useUsuario = () => {
     throw new Error("useUsuario deve ser usado dentro de UsuarioProvider");
   return context;
 };
+
 ```
 
 ---
