@@ -101,6 +101,30 @@ export default function App() {
 }
 ```
 
+## Tab.Navigator
+Cria o Bottom Tabs Navigator (barra de abas na parte inferior).
+Contém todas as telas (Tab.Screen) que aparecerão como abas.
+
+## screenOptions={({ route }) => ({ ... })}
+Permite configurar opções dinâmicas por tela.
+Serve para configurar opções de todas as telas/abas de um navegador de uma só vez.
+Exemplo de opções comuns:
+Cor da aba (tabBarActiveTintColor)
+Estilo do label (tabBarLabelStyle)
+Ícone da aba (tabBarIcon)
+Estamos usando uma função que recebe como argumento um objeto contendo informações da tela atual
+Este objeto (route) contém:
+route.name → nome da aba atual (Home, Profile, etc)
+route.key → chave única gerada para a tela
+route.params → parâmetros passados (se houver)
+Retorna um objeto de opções que será aplicado a todas as abas.
+
+## tabBarIcon: ({ color, size }) => { ... }
+Define o ícone exibido em cada aba.
+Recebe color e size automaticamente do React Navigation.
+route.name indica qual aba está sendo renderizada, permitindo definir ícones diferentes por tela.
+
+
 **Dicas:**
 
 * `tabBarIcon` → define ícones por aba.
@@ -268,7 +292,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 // Cada propriedade da interface é o nome de uma tela, exatamente como você registrou no Stack.Navigator
 // O valor de cada propriedade (undefined para a Home ou userId para o profile) indica quais parâmetros a tela recebe
 
-interface StackParamList {
+interface StackParamList extends ParamListBase{
   Home: undefined;
   Profile: { userId: number } | undefined;
 }
