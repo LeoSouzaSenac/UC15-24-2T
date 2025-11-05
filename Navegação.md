@@ -234,13 +234,128 @@ function ProfileScreen({ route }) {
 
 ## **8️⃣ Funções essenciais do navigation**
 
-| Função                   | Descrição                         |
-| ------------------------ | --------------------------------- |
-| `navigate('Profile')`    | Vai para a tela indicada          |
-| `push('Profile')`        | Abre nova instância da mesma tela |
-| `goBack()`               | Volta para a tela anterior        |
-| `replace('Profile')`     | Substitui a tela atual            |
-| `setParams({key:value})` | Atualiza parâmetros da tela atual |
+
+## 1️⃣ `navigate('Profile')`
+
+* **O que faz:** vai para a tela indicada.
+* **Comportamento:**
+
+  * Se a tela já estiver na pilha, ele **não cria uma nova instância**, apenas vai até ela.
+  * Se a tela não estiver na pilha, ele **cria uma nova instância**.
+* **Exemplo:**
+
+```tsx
+navigation.navigate('Profile'); // Vai para a tela Profile
+```
+
+* **Quando usar:**
+
+  * Fluxos normais de navegação, como ir de **Home → Profile** ou **Lista → Detalhes**.
+
+---
+
+## 2️⃣ `push('Profile')`
+
+* **O que faz:** abre **uma nova instância da mesma tela**, mesmo que ela já exista na pilha.
+* **Exemplo:**
+
+```tsx
+navigation.push('Profile'); // Abre outro Profile em cima da pilha
+```
+
+* **Quando usar:**
+
+  * Quando você quer **duplicar a tela** na pilha, por exemplo:
+
+    * Ver detalhes de produtos diferentes na mesma tela.
+    * Navegação recursiva (Profile de outro usuário).
+
+* **Diferença para `navigate`:**
+
+  * `navigate` vai para a tela existente se ela já estiver na pilha.
+  * `push` sempre cria uma nova instância.
+
+---
+
+## 3️⃣ `goBack()`
+
+* **O que faz:** volta para a tela anterior na pilha.
+* **Exemplo:**
+
+```tsx
+navigation.goBack(); // Volta para a tela anterior
+```
+
+* **Quando usar:**
+
+  * Botões de “voltar” ou swipe gestures.
+  * Sempre remove a tela do topo da pilha.
+
+* **Nota:**
+
+  * Se não houver tela anterior, nada acontece.
+  * Em algumas situações, pode ser necessário verificar `canGoBack()`:
+
+```tsx
+if (navigation.canGoBack()) {
+  navigation.goBack();
+}
+```
+
+---
+
+## 4️⃣ `replace('Profile')`
+
+* **O que faz:** substitui **a tela atual** por outra, sem manter a tela antiga na pilha.
+* **Exemplo:**
+
+```tsx
+navigation.replace('Profile'); // Substitui a tela atual
+```
+
+* **Quando usar:**
+
+  * Fluxos de login ou onboarding:
+
+    * Depois de fazer login, substituir LoginScreen por HomeScreen.
+    * O usuário não poderá voltar para a tela de login usando o botão “voltar”.
+
+---
+
+## 5️⃣ `setParams({ key: value })`
+
+* **O que faz:** atualiza os **parâmetros da tela atual**.
+* **Exemplo:**
+
+```tsx
+navigation.setParams({ theme: 'dark' });
+```
+
+* **Quando usar:**
+
+  * Alterar dinamicamente informações da tela **sem navegar para outra**.
+  * Útil em filtros, modos de exibição, tema, ou status que depende da mesma tela.
+
+* **Como acessar:**
+
+```tsx
+function ProfileScreen({ route }) {
+  const { theme } = route.params || {}; // pega o valor atualizado
+}
+```
+
+---
+
+### ✅ Resumo visual
+
+| Função             | O que faz                                            | Quando usar                                    |
+| ------------------ | ---------------------------------------------------- | ---------------------------------------------- |
+| `navigate('Tela')` | Vai para a tela indicada (não duplica se já existir) | Fluxos normais                                 |
+| `push('Tela')`     | Cria uma nova instância da tela                      | Detalhes de itens, recursão                    |
+| `goBack()`         | Volta para a tela anterior                           | Botões ou gestos de voltar                     |
+| `replace('Tela')`  | Substitui a tela atual                               | Login, onboarding, substituição de tela        |
+| `setParams({})`    | Atualiza parâmetros da tela atual                    | Alterações dinâmicas de dados sem sair da tela |
+
 
 ---
 
