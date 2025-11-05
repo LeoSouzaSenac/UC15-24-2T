@@ -176,6 +176,20 @@ Exemplo: Stack dentro de Bottom Tabs
 ## **7️⃣ O que é `navigation` e `route`**
 
 * `navigation` → objeto que controla a navegação (`navigate`, `goBack`, `push`, `replace`).
+O React Navigation passa automaticamente um objeto chamado navigation para todas as telas registradas no Navigator.
+Na prática, toda tela que você define em:
+```tsx
+<Stack.Screen name="Home" component={HomeScreen} />
+```
+recebe automaticamente um objeto de props que contém pelo menos:
+```tsx
+{
+  navigation: NavigationProp;
+  route: RouteProp;
+}
+
+```
+
 * `route` → objeto que representa a tela atual, contendo `params` e `name`.
 
 Exemplo de navegação com parâmetros:
@@ -250,12 +264,25 @@ import React from 'react';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 // Interface das rotas
+// É uma interface que define todas as rotas (telas) da sua pilha de navegação.
+// Cada propriedade da interface é o nome de uma tela, exatamente como você registrou no Stack.Navigator
+// O valor de cada propriedade (undefined para a Home ou userId para o profile) indica quais parâmetros a tela recebe
+
 interface StackParamList {
   Home: undefined;
   Profile: { userId: number } | undefined;
 }
 
 // Interface dos props da HomeScreen
+// Define os props que a tela HomeScreen recebe.
+// Neste caso, a tela HomeScreen recebe apenas o navigation, que permite controlar a navegação dentro do app.
+
+// NativeStackNavigationProp: tipo do objeto navigation do React Navigation para Stack Navigator
+// <StackParamList, 'Home'> StackParamList: todas as rotas da pilha. 'Home': qual tela estamos tipando especificamente.
+// Ou seja, o TypeScript vai saber que:
+// Podemos navegar para qualquer tela definida em StackParamList.
+// Se a tela aceita parâmetros, o TypeScript vai exigir que sejam passados corretamente.
+
 interface HomeScreenProps {
   navigation: NativeStackNavigationProp<StackParamList, 'Home'>;
 }
@@ -288,9 +315,9 @@ const styles = StyleSheet.create({
 
 ✅ Explicação:
 
-* `StackParamList` → define todas as rotas e parâmetros.
-* `HomeScreenProps` → garante que `navigation.navigate` só aceita telas e parâmetros válidos.
-* `navigation.navigate('Profile', { userId: 1 })` → TypeScript valida os tipos.
+* `StackParamList` :define todas as rotas e parâmetros.
+* `HomeScreenProps` :garante que `navigation.navigate` só aceita telas e parâmetros válidos.
+* `navigation.navigate('Profile', { userId: 1 })`: TypeScript valida os tipos.
 
 ---
 
