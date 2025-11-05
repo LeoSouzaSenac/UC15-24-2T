@@ -48,7 +48,7 @@ npm install react-native-screens react-native-safe-area-context
 3. Se estiver usando **Expo**, instale também:
 
 ```bash
-expo install react-native-gesture-handler react-native-reanimated react-native-screens react-native-safe-area-context @react-native-masked-view/masked-view
+npx expo install react-native-gesture-handler react-native-reanimated react-native-screens react-native-safe-area-context @react-native-masked-view/masked-view
 ```
 
 > ⚠️ É importante instalar essas dependências para que a navegação funcione corretamente, especialmente para gestos e animações suaves.
