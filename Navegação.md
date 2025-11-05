@@ -42,7 +42,7 @@ npm install @react-navigation/native
 2. Dependências essenciais:
 
 ```bash
-npm install react-native-screens react-native-safe-area-context
+npm install react-native-screens react-native-safe-area-context @react-navigation/native-stack
 ```
 
 3. Se estiver usando **Expo**, instale também:
