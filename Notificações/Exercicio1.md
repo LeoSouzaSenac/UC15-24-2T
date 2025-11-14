@@ -89,8 +89,6 @@ Exemplo:
 
 ---
 
-# **Dicas importantes para os alunos**
-
 ## Funções que você provavelmente vai precisar criar:
 
 ### **1. `pedirPermissao()`**
@@ -153,12 +151,11 @@ Crie estados como:
 
 # **Critérios de entrega**
 
-O aluno deverá entregar:
 
 * `App.js` funcionando
 * Interface simples, mas organizada
 * Comentários explicando cada função
 * Teste no próprio celular (recomendado)
-* Vídeo mostrando a notificação funcionando (opcional, mas ideal)
+
 
 
