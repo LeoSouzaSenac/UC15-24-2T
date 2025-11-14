@@ -83,6 +83,19 @@ Essas opções controlam:
 * **shouldPlaySound** → se toca som
 * **shouldSetBadge** → número no ícone
 
+## Nota: 
+A API setNotificationHandler foi projetada para suportar código assíncrono, pois alguns usos podem exigir:
+
+Buscar dados no armazenamento antes de decidir o alerta
+
+Checar permissões no momento
+
+Verificar configurações do usuário salvas no async storage
+
+Consultar um backend
+
+Carregar preferências antes de decidir se deve tocar som, por exemplo
+
 ---
 
 ## 4. Solicitando permissão ao usuário
