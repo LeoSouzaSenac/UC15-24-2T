@@ -50,7 +50,7 @@ eexpo install expo-notifications
 E **para Android**, instale a permissão de vibrar:
 
 ```sh
-eexpo install expo-device
+expo install expo-device
 ```
 
 > `expo-device` é necessário para obter informações do dispositivo (no caso de Push Notifications).
