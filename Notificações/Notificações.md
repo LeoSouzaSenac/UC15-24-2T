@@ -44,7 +44,7 @@ Obrigatório para que notificações funcionem.
 No seu projeto Expo, execute:
 
 ```sh
-eexpo install expo-notifications
+expo install expo-notifications
 ```
 
 E **para Android**, instale a permissão de vibrar:
