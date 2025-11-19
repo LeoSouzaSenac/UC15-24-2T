@@ -25,15 +25,29 @@ import { useEffect, useRef } from 'react';
 import { View, Text, AccessibilityInfo, findNodeHandle } from 'react-native';
 
 export default function Tela() {
+  // Permite lembrar de um componente mesmo quando a tela muda
   const viewRef = useRef(null);
 
   useEffect(() => {
     // useEffect roda após o componente ser renderizado
     const focusOnView = async () => {
       // findNodeHandle retorna a referência nativa do elemento
+      /*
+          cada componente renderizado (View, Text, etc.) recebe uma referência nativa no dispositivo, que o sistema operacional realmente entende.
+Por exemplo: o VoiceOver no iOS ou o TalkBack no Android não “vê” seu componente React diretamente — eles interagem com a representação nativa do componente.
+No React Native, seu código é escrito em JavaScript/React, mas os componentes visuais (View, Text, Button…) não são renderizados pelo React diretamente.
+
+React: cria a estrutura virtual, chamada Virtual DOM (ou, no caso do React Native, Virtual Tree).
+Nativo: cada componente React é traduzido para um componente visual real do sistema operacional:
+iOS → UIView, UILabel, UIButton, etc.
+Android → View, TextView, Button, etc.
+
+Essa “coisa real que aparece na tela” é o que chamamos de elemento nativo.
+Para que o sistema operacional (iOS/Android) consiga interagir com ele, precisamos de uma referência nativa, que é um identificador que o sistema entende e usa para foco, acessibilidade ou animações.
+      */
       const reactTag = findNodeHandle(viewRef.current);
       if (reactTag) {
-        // Muda o foco de acessibilidade para este container
+        // Muda o foco de acessibilidade para este container (o componente que envolve outros elementos)
         AccessibilityInfo.setAccessibilityFocus(reactTag);
       }
     };
