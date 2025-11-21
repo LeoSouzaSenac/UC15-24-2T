@@ -183,4 +183,92 @@ export default function App() {
 
 O `useRef` é essencial para criar **comportamentos avançados** e **otimizar renderizações** sem perder o controle sobre elementos nativos.
 
+---
+
+## Exercicio Jogo de Adivinhação com `useRef`
+
+### **Objetivo**
+
+Criar um jogo de adivinhação em React Native modularizado, onde:
+
+* O aplicativo gera um **número secreto** que não é exibido na tela.
+* O jogador digita palpites e recebe feedback (maior, menor ou acertou).
+* O número de tentativas é **armazenado internamente com `useRef`** e **não é mostrado** na tela.
+* O jogador perde se ultrapassar **10 tentativas**.
+
+---
+
+### **Estrutura de arquivos sugerida**
+
+```
+/MeuJogoAdivinhacao
+│
+├─ App.tsx                 // Componente principal que gerencia a lógica do jogo
+├─ components/
+│   ├─ InputPalpite.tsx    // Componente para o campo de input do palpite
+│   ├─ BotaoEnviar.tsx     // Componente para o botão de envio
+│   └─ Mensagem.tsx        // Componente para mostrar mensagem de feedback
+```
+
+---
+
+### **Componentes e responsabilidades**
+
+1. **App.tsx**
+
+   * Gera o **número secreto** usando `useRef` ao iniciar o jogo.
+   * Cria um `useRef` para contar **tentativas internas**.
+   * Armazena o valor do input e a mensagem de feedback usando `useState`.
+   * Importa e organiza os componentes `InputPalpite`, `BotaoEnviar` e `Mensagem`.
+   * Lógica principal: verificar se o palpite está correto, maior ou menor, e se o jogador perdeu.
+
+2. **InputPalpite.tsx**
+
+   * Campo `TextInput` para o jogador digitar seu palpite.
+   * Recebe props: valor atual e função para atualizar o valor.
+
+3. **BotaoEnviar.tsx**
+
+   * Botão que dispara a função de validação do palpite.
+   * Recebe props: função a ser chamada ao clicar.
+
+4. **Mensagem.tsx**
+
+   * Mostra um `Text` com o feedback do jogo.
+   * Recebe props: mensagem a ser exibida (ex.: “O número é maior”, “Você acertou”).
+
+---
+
+### **Hooks a utilizar**
+
+* **useRef**
+
+  * Guardar o **número secreto** (não precisa aparecer na tela).
+  * Guardar o **contador de tentativas internas** (não mostrado na UI).
+
+* **useState**
+
+  * Guardar o valor digitado pelo jogador.
+  * Atualizar a **mensagem de feedback** que será exibida na tela.
+
+---
+
+### **Funcionalidades obrigatórias**
+
+1. Gerar um número aleatório entre 1 e 100 usando `useRef`.
+2. Permitir que o jogador digite um palpite e envie usando o botão.
+3. Comparar o palpite com o número secreto:
+
+   * Se correto → mostrar mensagem de vitória.
+   * Se incorreto → mostrar mensagem indicando se o número é maior ou menor.
+4. Incrementar o contador de tentativas **internamente usando `useRef`**.
+5. Se o jogador ultrapassar **10 tentativas** → mostrar mensagem de derrota e revelar o número secreto.
+6. Limpar o campo de input após cada tentativa.
+
+---
+
+### **Extras opcionais**
+
+* Botão para **reiniciar o jogo**, gerando um novo número secreto e zerando o contador de tentativas.
+* Validar entradas inválidas (não números, valores fora do intervalo 1-100).
 
